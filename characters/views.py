@@ -13,13 +13,17 @@ from characters.models import Character
 from characters.serializers import CharacterSerializer
 
 
-@extend_schema(responses={status.HTTP_200_OK: CharacterSerializer})
-@api_view(["GET"])
-def get_random_character_view(requests: Request) -> Response:
+def get_random_character() -> Character:
     """Get random character from database"""
     pks = Character.objects.values_list("pk", flat=True)
     random_id = choice(pks)
-    random_character = Character.objects.get(pk=random_id)
+    return Character.objects.get(pk=random_id)
+
+
+@extend_schema(responses={status.HTTP_200_OK: CharacterSerializer})
+@api_view(["GET"])
+def get_random_character_view(requests: Request) -> Response:
+    random_character = get_random_character()
     serializer = CharacterSerializer(random_character)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
