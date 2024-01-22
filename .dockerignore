@@ -1,0 +1,5 @@
+.env.sample
+README.md
+.gitignore
+.dockerignore
+.venv
