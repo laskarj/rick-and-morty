@@ -11,6 +11,7 @@ from drf_spectacular.types import OpenApiTypes
 
 from characters.models import Character
 from characters.serializers import CharacterSerializer
+from characters.pagination import CharacterPagination
 
 
 def get_random_character() -> Character:
@@ -30,6 +31,7 @@ def get_random_character_view(requests: Request) -> Response:
 
 class CharacterListView(ListAPIView):
     serializer_class = CharacterSerializer
+    pagination_class = CharacterPagination
 
     def get_queryset(self) -> QuerySet:
         queryset = Character.objects.all()
